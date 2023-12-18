@@ -1,0 +1,71 @@
+<!-- views/main.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ model.nickname }}님의 메인 페이지 - 온라인 도서 대출 플랫폼</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+
+<div class="container mx-auto p-8">
+    <h2 class="text-2xl font-semibold mb-4">{{ model.nickname }}님의 메인 페이지</h2>
+
+    <img src="{{imgSrc}}" alt="앗 로딩에 실패했어요!" class="rounded-full h-60 w-60 object-cover border-4 border-white ">
+
+    <hr>
+    <br>
+    <br>
+    <div class="grid grid-cols-2 gap-4 ">
+
+        <!-- 이쁜 이미지 태그 -->
+        <a href="/account" class="bg-white p-4 rounded shadow-md block text-center">
+            <h3 class="text-lg font-semibold mb-2">계좌 보기</h3>
+            <p class="text-gray-600">현재 계좌 상태를 확인하세요.</p>
+        </a>
+
+        <!-- 도서 등록하기 페이지로 이동 -->
+        <a href="/book/register" class="bg-white p-4 rounded shadow-md block text-center">
+            <h3 class="text-lg font-semibold mb-2">도서 등록하기</h3>
+            <p class="text-gray-600">새로운 도서를 등록하세요.</p>
+        </a>
+
+        <!-- 내 정보 수정하기 페이지로 이동 -->
+        <a href="/profile" class="bg-white p-4 rounded shadow-md block text-center">
+            <h3 class="text-lg font-semibold mb-2">내 정보 수정하기</h3>
+            <p class="text-gray-600">개인 정보를 수정하세요.</p>
+        </a>
+
+        <!-- 도서 대출하기 페이지로 이동 -->
+        <a href="/list" class="bg-white p-4 rounded shadow-md block text-center">
+            <h3 class="text-lg font-semibold mb-2">도서 대출하기</h3>
+            <p class="text-gray-600">도서를 대출하세요.</p>
+        </a>
+
+        <!-- 로그아웃 버튼 추가 -->
+        <button type="button" id="logoutBtn" class="bg-red-500 text-white p-2 rounded mt-4">로그아웃</button>
+    </div>
+</div>
+
+<script>
+    // 클라이언트 측 로그아웃 처리
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try {
+            const response = await fetch('/auth/logout', {
+                method: 'GET',
+            });
+
+            if (response.ok) {
+                window.location.href = '/'; // 로그아웃 성공 시 홈 페이지로 이동
+            } else {
+                console.error('로그아웃 실패');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+</script>
+
+</body>
+</html>

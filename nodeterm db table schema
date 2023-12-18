@@ -1,0 +1,48 @@
+CREATE TABLE IF NOT EXISTS `users` (
+    `id` INTEGER NOT NULL auto_increment,
+    `userId` varchar(20) UNIQUE,
+    `nickname` varchar(10),
+    `password` varchar(100),
+    `img` varchar(300),
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `description` varchar(500),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `books` (
+    `id` INTEGER NOT NULL auto_increment,
+    `content` VARCHAR(500) NOT NULL,
+    `img` VARCHAR(300),
+    `title` VARCHAR(100),
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `price` INTEGER,
+    `userId` INTEGER,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `account`(
+    `id` INTEGER NOT NULL auto_increment,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `amount` INTEGER,
+    `userId` INTEGER,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY(`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+
+
+CREATE TABLE IF NOT EXISTS `authority` (
+    `id` INTEGER NOT NULL auto_increment,
+    `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `role` ENUM('normal', 'manager', 'admin'),
+    `bannedDue` DATETIME,
+    `bannedAt` DATETIME,
+    `userId` INTEGER,
+     PRIMARY KEY (`id`),
+     FOREIGN KEY(`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;
+

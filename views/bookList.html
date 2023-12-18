@@ -1,0 +1,58 @@
+<!-- views/bookList.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+<div class="container mx-auto p-8">
+    <h1 class="text-4xl font-bold mb-8 text-gray-800">Book List - Page {{ page }}</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for book in books %}
+        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+            <img src="{{ book.img }}" alt="{{ book.content }}" class="w-full h-48 object-cover object-center rounded-t-md">
+            <div class="p-6">
+                <h2 class="text-xl font-extrabold mb-2 text-gray-800">{{ book.content }}</h2>
+                <p class="text-gray-600 mb-4">{{ book.price }} 원</p>
+                <a href="book/{{book.id}}" class="text-blue-500 hover:underline">Details</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-8 flex justify-between items-center">
+        <a href="/list?page={% if page-1 < 0 %}{{1}}{% else %}{{page - 1 }}{% endif %}" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 {% if page === 1 %}opacity-50 cursor-not-allowed{% endif %}">Previous</a>
+        <span class="py-2 px-4 bg-gray-300 rounded text-gray-800">{{ page }}</span>
+        <a href="/list?page={% if count < page +1 %}{{page}}{% else %}{{page + 1}}{% endif %}" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">Next</a>
+    </div>
+
+    <!-- Go back home button -->
+    <div class="mt-4">
+        <a href="/main" class="text-blue-500 hover:underline">Go Back Home</a>
+    </div>
+</div>
+
+
+<script>
+    // 페이지 리디렉션 후 URL 쿼리 파라미터를 읽어와서 alert로 출력
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryString = urlParams.get("error");
+
+    if (queryString) {
+        const errorMessage = queryString;
+
+        const decodedMessage = decodeURIComponent(errorMessage);
+
+        alert("에러 메시지: " + decodedMessage);
+    }
+</script>
+</body>
+
+</html>

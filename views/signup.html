@@ -1,0 +1,41 @@
+<!-- views/signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+<div class="bg-white p-8 rounded shadow-md w-96">
+    <h2 class="text-2xl font-semibold mb-4">회원가입</h2>
+    <form action="/auth/signup" method="POST">
+        <div class="mb-4">
+            <label for="userId" class="block text-gray-600">아이디</label>
+            <input type="text" id="userId" name="userId" class="w-full border p-2 rounded">
+        </div>
+        <div class="mb-4">
+            <label for="nickname" class="block text-gray-600">별명</label>
+            <input type="text" id="nickname" name="nickname" class="w-full border p-2 rounded">
+        </div>
+        <div class="mb-4">
+            <label for="password" class="block text-gray-600">비밀번호</label>
+            <input type="password" id="password" name="password" class="w-full border p-2 rounded">
+        </div>
+        <div class="mb-4">
+            <label for="img" class="block text-gray-600">프로필 사진 URL</label>
+            <input type="text" id="img" name="img" class="w-full border p-2 rounded">
+        </div>
+        <div class="mb-4">
+            <label for="description" class="block text-gray-600">자기소개</label>
+            <textarea id="description" name="description" class="w-full border p-2 rounded"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-green-500 text-white p-2 rounded">회원가입</button>
+
+    </form>
+</div>
+
+</body>
+</html>

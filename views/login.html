@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+<div class="bg-white p-8 rounded shadow-md w-96">
+    <h2 class="text-2xl font-semibold mb-4">로그인</h2>
+    <form action="/auth/login" method="POST">
+        <div class="mb-4">
+            <label for="userId" class="block text-gray-600">아이디</label>
+            <input type="text" id="userId" name="userId" class="w-full border p-2 rounded">
+        </div>
+        <div class="mb-4">
+            <label for="password" class="block text-gray-600">비밀번호</label>
+            <input type="password" id="password" name="password" class="w-full border p-2 rounded">
+        </div>
+        <div class="flex justify-between items-center text-center">
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">로그인</button>
+            <a href="/" class="w-full bg-red-500 text-white p-2 rounded">취소하기</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!-- views/accountView.njk -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ model.nickname }}님의 계좌 - 온라인 도서 대출 플랫폼</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+
+<div class="container mx-auto p-8">
+    <h2 class="text-2xl font-semibold mb-4">{{ model.nickname }}님의 계좌</h2>
+
+    <!-- 계좌 정보 표시 -->
+    <div class="bg-white p-8 rounded shadow-md">
+        <div class="mb-4">
+            <label class="block text-gray-600">마지막 거래</label>
+            <p class="text-lg text-gray-800">{{ accountLog }}</p>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-600">잔액</label>
+            <p class="text-lg text-green-600 font-semibold">{{ balance }}포인트</p>
+        </div>
+
+        <!-- 잔액 충전을 위한 인풋 필드 -->
+        <div class="mb-4">
+            <label for="chargeAmount" class="block text-gray-600">충전 금액</label>
+            <input type="number" id="chargeAmount" name="chargeAmount" class="w-full border p-2 rounded" min="1" required>
+        </div>
+
+        <!-- 충전 버튼 -->
+        <button id="chargeBtn" class="bg-blue-500 text-white p-2 rounded">잔액 충전</button>
+    </div>
+
+    <!-- 이전 페이지로 돌아가는 버튼 -->
+    <a href="/main" class="text-gray-500 hover:underline mt-4 block">이전 페이지로 돌아가기</a>
+</div>
+
+<script>
+    // 클라이언트 측 잔액 충전 처리
+    document.getElementById('chargeBtn').addEventListener('click', async () => {
+        const chargeAmount = document.getElementById('chargeAmount').value;
+
+        if (chargeAmount > 0) {
+            try {
+                 const response = await fetch('/myAccount/charge', {
+                     method: 'PATCH',
+                     headers: {
+                         'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({ chargeAmount }),
+                 });
+                alert(`${chargeAmount}원이 충전되었습니다.`);
+                window.location.href = '/main'
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            alert('충전 금액은 0보다 커야 합니다.');
+        }
+    });
+</script>
+
+</body>
+</html>

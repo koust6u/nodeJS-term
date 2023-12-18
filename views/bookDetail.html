@@ -1,0 +1,95 @@
+<!-- views/bookDetail.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Detail</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+{% if isMine %}
+<div class="container mx-auto p-8">
+    <h1 class="text-4xl font-bold mb-8 text-gray-800">Edit Book</h1>
+
+    <!-- Update Book Form -->
+    <form action="/book/edit/{{ detail.id }}" method="post" class="bg-white rounded-lg overflow-hidden shadow-md p-6">
+        <!-- Include a CSRF token for security -->
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        <div class="mb-4">
+            <label for="title" class="text-gray-600 block">Title:</label>
+            <input type="text" id="title" name="title" value="{{ detail.title }}" class="w-full border p-2 rounded-md">
+        </div>
+
+        <div class="mb-4">
+            <label for="content" class="text-gray-600 block">Description:</label>
+            <textarea id="content" name="content" class="w-full border p-2 rounded-md">{{ detail.content }}</textarea>
+        </div>
+
+        <div class="mb-4">
+            <label for="price" class="text-gray-600 block">Price (원):</label>
+            <input type="text" id="price" name="price" value="{{ detail.price }}" class="w-full border p-2 rounded-md">
+        </div>
+
+        <!-- Add more fields as needed -->
+
+        <div class="flex items-center">
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Update Book</button>
+        </div>
+    </form>
+
+    <!-- Delete Book Form -->
+    <form action="/book/delete/{{ detail.id }}" method="post" class="mt-4">
+        <!-- Include a CSRF token for security -->
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <!-- Use the DELETE method -->
+        <input type="hidden" name="_method" value="DELETE">
+
+        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md" onclick="return confirm('정말 삭제하시겠습니까?')">Delete Book</button>
+    </form>
+
+    <a href="/list" class="ml-4 text-blue-500 hover:underline">Cancel</a>
+</div>
+
+{% else %}
+
+<div class="container mx-auto p-8">
+    <h1 class="text-4xl font-bold mb-8 text-gray-800">Book Detail</h1>
+
+    <div class="bg-white rounded-lg overflow-hidden shadow-md">
+        <img src="{{ detail.img }}" alt="{{ detail.content }}" class="w-full h-64 object-cover object-center rounded-t-md">
+        <div class="p-6">
+            <h6 class="text-2xl font-extrabold mb-4 text-gray-800">{{ detail.title }}</h6>
+            <p class="text-gray-600 mb-2">책 설명: {{ detail.content or 'N/A'}}</p>
+            <p class="text-gray-600 mb-2">가격: {{ detail.price or 'N/A'}} 포인트</p>
+            <p class="text-gray-600 mb-2">등록 일: {{ detail.createdAt or 'N/A'}}</p>
+            <p class="text-gray-600 mb-4">수정 일: {{ detail.updatedAt or 'N/A'}}</p>
+            <p class="text-gray-600 mb-2">등록자 ID: {{ members.userId or 'N/A'}}</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="/list" class="text-blue-500 hover:underline">Go Back to Book List</a>
+
+
+        <form id="purchaseForm" action="/book/purchase/{{detail.id}}" method="post" class="inline">
+            <!-- Include a CSRF token for security -->
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+            <!-- Use detail.price as the default value for amount -->
+            <input type="hidden" id="amount" name="amount" value="{{ detail.price }}">
+
+            <button type="submit" class="ml-4 px-4 py-2 bg-green-500 text-white rounded-md">대여하기</button>
+        </form>
+    </div>
+
+</div>
+
+{% endif %}
+</body>
+
+</html>
